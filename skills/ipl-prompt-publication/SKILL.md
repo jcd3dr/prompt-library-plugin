@@ -22,4 +22,4 @@ Read all four references before editing content: `references/creative-prompt.md`
 
 ## Boundaries
 
-Communicate with the user in Spanish; visual prompts and AI-directed skill instructions in English; public educational metadata in Spanish. Do not administer categories, posts or videos via this publication skill. Do not destroy content or republish an existing item without targeted authorization. Do not interpret successful database validation as successful visual QA.
+Communicate with the user in Spanish; visual prompts and AI-directed skill instructions in English; public educational metadata in Spanish. Do not administer categories, posts or videos via this publication skill: use `ipl-library-maintenance` for categories, tags, video prompts and edits to existing prompts, and `ipl-blog-editorial` for articles. Load `ipl-site-guide` first when available for site context and house rules. Do not destroy content or republish an existing item without targeted authorization. Do not interpret successful database validation as successful visual QA.

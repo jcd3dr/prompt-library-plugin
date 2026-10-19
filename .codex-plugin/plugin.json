@@ -1,6 +1,6 @@
 {
   "name": "prompt-library-plugin",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "description": "Manage Image Prompt Library as a public platform for discovering, learning, customizing, and reusing AI prompts through its connected MCP.",
   "author": {
     "name": "DadeCore"
@@ -29,6 +29,6 @@
     "websiteURL": "https://prompts.jcdcruz.com",
     "logo": "./assets/logo.svg",
     "composerIcon": "./assets/composer-icon.svg",
-    "defaultPrompt": "Create and publish one reusable image prompt template in Image Prompt Library."
+    "defaultPrompt": "Review Image Prompt Library and tell me what you can do with it."
   }
 }

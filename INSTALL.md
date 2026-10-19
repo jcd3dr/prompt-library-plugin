@@ -10,7 +10,7 @@ codex plugin add prompt-library-plugin@dadecore-prompt-library
 codex plugin list --json
 ```
 
-Inicia una sesión nueva. Comprueba la skill `ipl-prompt-publication` y la conexión `image-prompt-library` antes de publicar.
+Inicia una sesión nueva. Comprueba las skills (`ipl-site-guide`, `ipl-prompt-publication`, `ipl-blog-editorial`, `ipl-library-maintenance`) y la conexión `image-prompt-library` antes de publicar.
 
 ## Claude Code
 
@@ -20,7 +20,7 @@ claude plugin install prompt-library-plugin@dadecore-prompt-library
 claude plugin list
 ```
 
-Abre una sesión nueva y revisa `/mcp`. Invoca `/prompt-library-plugin:ipl-prompt-publication` para el flujo editorial. La generación depende de las herramientas reales del entorno: instalar el plugin no añade GPT Image a Claude Code. La skill requiere autorización explícita antes de cambiar de generador.
+Abre una sesión nueva y revisa `/mcp`. Empieza con `/prompt-library-plugin:ipl-site-guide`; te dirige a la skill de cada tarea (prompts, blog o mantenimiento). La generación depende de las herramientas reales del entorno: instalar el plugin no añade GPT Image a Claude Code. La skill requiere autorización explícita antes de cambiar de generador.
 
 ## ChatGPT web y móvil
 
@@ -30,7 +30,7 @@ Para instalar en tu cuenta personal de ChatGPT, incluida Plus, descarga el paque
 2. Guarda el archivo ZIP en Archivos o Descargas. Si el teléfono lo descomprime automáticamente, conserva o vuelve a descargar el ZIP original.
 3. Abre ChatGPT.com, selecciona Plugin Creator y adjunta el ZIP desde el selector de archivos.
 4. Solicita la instalación del plugin adjunto en tu cuenta; abre el enlace que devuelve Plugin Creator y completa la instalación y cualquier conexión o autenticación solicitada.
-5. Abre un chat nuevo, selecciona Image Prompt Library y verifica la skill `ipl-prompt-publication` y las herramientas MCP con una operación de lectura.
+5. Abre un chat nuevo, selecciona Image Prompt Library y verifica las skills (empieza por `ipl-site-guide`) y las herramientas MCP con una operación de lectura.
 
 Descarga el asset **`prompt-library-plugin-v<VERSION>.zip`**, no **Source code (zip)** ni **Code → Download ZIP**: esos archivos automáticos contienen el repositorio completo.
 

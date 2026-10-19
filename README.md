@@ -4,11 +4,14 @@ Editorial and content operations plugin for [Image Prompt Library](https://promp
 
 - `plugin.json`: portable Agent Plugins 1.0 manifest and public identity.
 - `mcp.json`: remote Image Prompt Library MCP at `https://prompts.jcdcruz.com/mcp` (streamable HTTP; authentication must be configured in the target runtime where required).
-- `skills/ipl-prompt-publication/SKILL.md`: the **single authoritative image-template publication skill**, with supporting references for visual design, QA, educational Spanish metadata and MCP operation.
+- `skills/ipl-site-guide/SKILL.md`: **start here**. What the site is, who it serves, the agent's role, house rules, a task router and the full MCP tool map.
+- `skills/ipl-prompt-publication/SKILL.md`: the authoritative image-template publication workflow, with references for visual design, QA, educational Spanish metadata and MCP operation.
+- `skills/ipl-blog-editorial/SKILL.md`: blog ("Aprende") workflow with the editorial line, voice, article format, SEO and pre-publication checklist.
+- `skills/ipl-library-maintenance/SKILL.md`: editing existing prompts, video prompts from supplied files, categories, tags, audits, unpublish and delete.
 
 When publishing a newly designed img2image template, the skill builds its own fictional input fixture when no user image was commissioned, then generates and validates the result from the locked reusable prompt. Native GPT Image takes priority. A separate source fixture is not a second gallery variant.
 
-The plugin's broader purpose is website content management; the publication skill handles the image-prompt publication workflow specifically. Other site operations should use the actual connected MCP capabilities with appropriate task scope and approval. The separate `DadeCore Visual Prompt Publisher` ChatGPT plugin is superseded by this repository skill.
+The plugin's broader purpose is website content management: `ipl-site-guide` routes each task to the workflow skill that covers it. The separate `DadeCore Visual Prompt Publisher` ChatGPT plugin is superseded by these repository skills.
 
 El paquete 2.1.3 declara explícitamente `requires_local_executor: false` y valida que su configuración no requiera ejecución local. La comprobación en una instalación real de ChatGPT.com sigue siendo necesaria; actualizar GitHub no modifica automáticamente el plugin guardado en una cuenta.
 
@@ -21,7 +24,7 @@ Para una instalación personal en ChatGPT, incluida una cuenta Plus, descarga el
 1. Desde tu teléfono o computadora, descarga `prompt-library-plugin-v<VERSION>.zip` en Archivos o Descargas. Si el navegador lo descomprime automáticamente, conserva o vuelve a descargar el ZIP original.
 2. Abre ChatGPT.com, selecciona Plugin Creator y adjunta el archivo ZIP desde Archivos o Descargas.
 3. Pide a Plugin Creator que instale el plugin del archivo adjunto en tu cuenta. Abre el enlace que devuelva y completa la instalación y la conexión MCP cuando se soliciten.
-4. Inicia un chat nuevo, selecciona Image Prompt Library y comprueba que aparecen la skill `ipl-prompt-publication` y las herramientas del MCP antes de publicar contenido.
+4. Inicia un chat nuevo, selecciona Image Prompt Library y comprueba que aparecen las skills (empieza por `ipl-site-guide`) y las herramientas del MCP antes de publicar contenido.
 
 Usa el archivo **`prompt-library-plugin-v<VERSION>.zip` de Assets** del release. Los archivos automáticos **Source code (zip)** y **Code → Download ZIP** contienen el repositorio completo y no son el paquete preparado para instalar.
 
