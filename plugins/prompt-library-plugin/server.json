@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.jcd3dr/image-prompt-library",
+  "title": "Image Prompt Library MCP",
+  "description": "Manage reusable image prompts, example images, and educational content in Image Prompt Library.",
+  "version": "2.1.2",
+  "websiteUrl": "https://prompts.jcdcruz.com",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/jcd3dr/prompt-library-plugin/main/assets/logo.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://prompts.jcdcruz.com/mcp"
+    }
+  ]
+}

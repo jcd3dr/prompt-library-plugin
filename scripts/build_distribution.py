@@ -15,6 +15,12 @@ def build():
     name = manifest["name"]
     base = {k: manifest[k] for k in ("name", "version", "description", "author", "homepage", "repository", "keywords")}
     portable_mcp = json.loads((ROOT / "mcp.json").read_text(encoding="utf-8"))
+    registry = json.loads((ROOT / "server.json").read_text(encoding="utf-8"))
+    if registry["version"] != manifest["version"]:
+        raise ValueError("server.json and plugin.json versions must match")
+    expected_remotes = list(portable_mcp["mcpServers"].values())
+    if registry["remotes"] != expected_remotes:
+        raise ValueError("server.json and mcp.json endpoints must match")
     legacy = {"mcpServers": {}}
     for key, server in portable_mcp["mcpServers"].items():
         if server["type"] != "streamable-http":
@@ -37,7 +43,7 @@ def build():
     if payload.exists():
         shutil.rmtree(payload)
     payload.mkdir(parents=True)
-    for entry in ("plugin.json", "mcp.json", ".mcp.json", ".codex-plugin", ".claude-plugin", "skills", "assets"):
+    for entry in ("plugin.json", "mcp.json", "server.json", ".mcp.json", ".codex-plugin", ".claude-plugin", "skills", "assets"):
         source = ROOT / entry
         if source.is_dir():
             shutil.copytree(source, payload / entry, ignore=shutil.ignore_patterns("marketplace.json"))
@@ -57,7 +63,7 @@ if __name__ == "__main__":
     archive = ROOT / "dist" / "prompt-library-plugin.zip"
     archive.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
-        for entry in ("plugin.json", "mcp.json", "skills", "assets"):
+        for entry in ("plugin.json", "mcp.json", "server.json", "skills", "assets"):
             source = ROOT / entry
             for path in ([source] if source.is_file() else sorted(source.rglob("*"))):
                 if path.is_file():

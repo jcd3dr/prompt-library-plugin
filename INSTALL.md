@@ -45,3 +45,11 @@ Documentación oficial: [OpenAI](https://developers.openai.com/plugins/build/plu
 ## Validación del paquete de distribución
 
 La construcción comprueba metadatos obligatorios, iconos incluidos y contenidos dentro del paquete, ausencia de dependencias por ID de app y transporte remoto. Los adaptadores Codex y Claude se derivan de `mcp.json`; no mantienen otra URL independiente. El ZIP incluye solo un plugin y excluye marketplaces, credenciales y conexiones de cuentas personales. La validación estática del paquete se realiza antes de cualquier instalación.
+
+## Metadatos del servidor: server.json
+
+`server.json` usa el esquema oficial del MCP Registry, versión 2025-12-11. Describe identidad, nombre visible, descripción, versión, sitio web, icono HTTPS y endpoint remoto. Se incluye en el repositorio, la copia de marketplace y el ZIP de distribución. La construcción exige que versión y endpoint coincidan con los manifiestos del plugin.
+
+El formato procede de https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/server-json/generic-server-json.md. vidIQ utiliza el mismo formato en https://github.com/vid-io/vidiq-mcp/blob/main/server.json.
+
+Añadir el archivo no publica el servidor en MCP Registry. Su uso documentado es metadatos de registro, descubrimiento y gestión de paquetes. La lectura de este archivo para la ficha de Apps de ChatGPT se mantiene como hipótesis de prueba, no como una garantía documentada por OpenAI. No sustituye `mcp.json` ni los metadatos del plugin.
