@@ -24,8 +24,13 @@ Abre una sesión nueva y revisa `/mcp`. Invoca `/prompt-library-plugin:ipl-promp
 
 ## ChatGPT web y móvil
 
-La instalación personal se realiza guardando el paquete como plugin privado mediante Plugin Creator. Si ya existe «Image Prompt Library MCP», actualiza sus skills conservando su identidad y conexión; no crees otro MCP duplicado. Después abre el enlace del plugin y usa el botón de instalación si aún aparece disponible. Inicia un chat nuevo y selecciónalo con `@`.
+Construye el paquete independiente con `python scripts/build_distribution.py`. El archivo `dist/prompt-library-plugin.zip` contiene `plugin.json`, `mcp.json`, las skills y los iconos. Guárdalo como plugin privado mediante Plugin Creator y abre el enlace que devuelve para instalarlo.
 
+El paquete declara su propio endpoint remoto. No contiene `.app.json`, IDs de conectores registrados ni depende de «Image Prompt Library MCP» creado previamente en una cuenta. No uses la actualización de una app existente como prueba de instalación independiente.
+
+Los metadatos de presentación van en `plugin.json` → `extensions.com.openai.interface`: `displayName`, `shortDescription`, `longDescription`, `logo` y `composerIcon`. La conexión va en `mcp.json` → `mcpServers.image-prompt-library`. Comprueba ambos componentes después de importar. La autenticación que solicite el host sigue siendo necesaria.
+
+La importación independiente se comprobó el 19 de octubre de 2026: ChatGPT conservó endpoint, transporte, nombre, descripciones, iconos y skill sin generar una referencia `.app.json`. La instalación y la ficha visual de la conexión requieren comprobación en el host; esta prueba de importación no garantiza por sí sola su apariencia.
 El catálogo Git no equivale a una instalación personal en ChatGPT web. La importación de marketplaces GitHub para equipos corresponde a administradores de espacios compatibles. No requiere publicar este plugin en el directorio público.
 
 ## Conexión y comprobación
