@@ -8,13 +8,28 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2) + "\n")
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
 def build():
-    manifest = json.loads((ROOT / "plugin.json").read_text())
+    manifest = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
     name = manifest["name"]
     base = {k: manifest[k] for k in ("name", "version", "description", "author", "homepage", "repository", "keywords")}
-    legacy = {"mcpServers": {"image-prompt-library": {"type": "http", "url": "https://prompts.jcdcruz.com/mcp"}}}
+    portable_mcp = json.loads((ROOT / "mcp.json").read_text(encoding="utf-8"))
+    legacy = {"mcpServers": {}}
+    for key, server in portable_mcp["mcpServers"].items():
+        if server["type"] != "streamable-http":
+            raise ValueError("This distribution requires a remote Streamable HTTP server")
+        legacy["mcpServers"][key] = {**server, "type": "http"}
+    interface = manifest["extensions"]["com.openai"]["interface"]
+    if manifest["extensions"]["com.openai"].get("apps"):
+        raise ValueError("Standalone distribution must not depend on registered app IDs")
+    for key in ("displayName", "shortDescription", "longDescription", "logo", "composerIcon"):
+        if not interface.get(key):
+            raise ValueError("Missing distribution metadata: " + key)
+    for key in ("logo", "composerIcon"):
+        asset = (ROOT / interface[key]).resolve()
+        if not asset.is_relative_to(ROOT.resolve()) or not asset.is_file():
+            raise ValueError("Missing or uncontained icon: " + key)
     write(ROOT / ".mcp.json", legacy)
     write(ROOT / ".codex-plugin/plugin.json", {**base, "skills": "./skills/", "mcpServers": "./.mcp.json", "interface": manifest["extensions"]["com.openai"]["interface"]})
     write(ROOT / ".claude-plugin/plugin.json", base)

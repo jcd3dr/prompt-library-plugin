@@ -26,11 +26,10 @@ Abre una sesión nueva y revisa `/mcp`. Invoca `/prompt-library-plugin:ipl-promp
 
 Construye el paquete independiente con `python scripts/build_distribution.py`. El archivo `dist/prompt-library-plugin.zip` contiene `plugin.json`, `mcp.json`, las skills y los iconos. Guárdalo como plugin privado mediante Plugin Creator y abre el enlace que devuelve para instalarlo.
 
-El paquete declara su propio endpoint remoto. No contiene `.app.json`, IDs de conectores registrados ni depende de «Image Prompt Library MCP» creado previamente en una cuenta. No uses la actualización de una app existente como prueba de instalación independiente.
+El paquete declara su propio endpoint remoto. No contiene `.app.json`, IDs de conectores registrados ni depende de «Image Prompt Library MCP» creado previamente en una cuenta. 
 
-Los metadatos de presentación van en `plugin.json` → `extensions.com.openai.interface`: `displayName`, `shortDescription`, `longDescription`, `logo` y `composerIcon`. La conexión va en `mcp.json` → `mcpServers.image-prompt-library`. Comprueba ambos componentes después de importar. La autenticación que solicite el host sigue siendo necesaria.
+Los metadatos de presentación van en `plugin.json` → `extensions.com.openai.interface`: `displayName`, `shortDescription`, `longDescription`, `logo` y `composerIcon`. La conexión va en `mcp.json` → `mcpServers.image-prompt-library`. El paquete contiene ambos componentes. La autenticación que solicite el host sigue siendo necesaria.
 
-La importación independiente se comprobó el 19 de octubre de 2026: ChatGPT conservó endpoint, transporte, nombre, descripciones, iconos y skill sin generar una referencia `.app.json`. La instalación y la ficha visual de la conexión requieren comprobación en el host; esta prueba de importación no garantiza por sí sola su apariencia.
 El catálogo Git no equivale a una instalación personal en ChatGPT web. La importación de marketplaces GitHub para equipos corresponde a administradores de espacios compatibles. No requiere publicar este plugin en el directorio público.
 
 ## Conexión y comprobación
@@ -42,3 +41,7 @@ Endpoint: `https://prompts.jcdcruz.com/mcp`, HTTP transmisible. Completa la aute
 La fuente editorial vive en `skills/` y los manifiestos portables en la raíz. Ejecuta `python scripts/build_distribution.py` después de editarla: genera los adaptadores y el paquete de marketplace en `plugins/prompt-library-plugin/`. No edites esa copia generada directamente. Confirma ambos catálogos y la igualdad de las skills antes de publicar cambios.
 
 Documentación oficial: [OpenAI](https://developers.openai.com/plugins/build/plugins), [Codex CLI](https://developers.openai.com/codex/cli/reference), [Claude Code](https://code.claude.com/docs/en/plugin-marketplaces).
+
+## Validación del paquete de distribución
+
+La construcción comprueba metadatos obligatorios, iconos incluidos y contenidos dentro del paquete, ausencia de dependencias por ID de app y transporte remoto. Los adaptadores Codex y Claude se derivan de `mcp.json`; no mantienen otra URL independiente. El ZIP incluye solo un plugin y excluye marketplaces, credenciales y conexiones de cuentas personales. La validación estática del paquete se realiza antes de cualquier instalación.
