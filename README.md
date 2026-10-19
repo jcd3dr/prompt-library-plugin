@@ -12,6 +12,10 @@ The plugin's broader purpose is website content management; the publication skil
 
 ## Setup
 
+See [INSTALL.md](INSTALL.md) for exact Codex, Claude Code and ChatGPT installation steps.
+
+Marketplace: `dadecore-prompt-library`. Plugin: `prompt-library-plugin`.
+
 Install the repository plugin using a compatible Agent Plugins host. Confirm the remote MCP transport and host-side authentication. The presence of `mcp.json` does not automatically authenticate a service or establish that it is reachable. Validate actual MCP tools from the host after installation.
 
 Reference: https://developers.openai.com/plugins/build/plugins

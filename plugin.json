@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "prompt-library-plugin",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Manage Image Prompt Library as a public platform for discovering, learning, customizing, and reusing AI prompts through its connected MCP.",
   "author": {
     "name": "DadeCore"
@@ -18,7 +18,7 @@
     "com.openai": {
       "interface": {
         "displayName": "Image Prompt Library",
-        "shortDescription": "Manage and curate a public AI prompt library.",
+        "shortDescription": "Manage your AI prompt library",
         "longDescription": "Editorial and content management for Image Prompt Library. Research, develop, curate, maintain, and publish useful, reusable AI prompt templates and educational content through the connected MCP, following specialized skills.",
         "developerName": "DadeCore",
         "category": "Productivity",
@@ -28,7 +28,8 @@
         ],
         "websiteURL": "https://prompts.jcdcruz.com",
         "logo": "./assets/logo.svg",
-        "composerIcon": "./assets/composer-icon.svg"
+        "composerIcon": "./assets/composer-icon.svg",
+        "defaultPrompt": "Create and publish one reusable image prompt template in Image Prompt Library."
       }
     }
   }

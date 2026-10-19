@@ -1,0 +1,20 @@
+{
+  "name": "dadecore-prompt-library",
+  "interface": {
+    "displayName": "DadeCore Prompt Library"
+  },
+  "plugins": [
+    {
+      "name": "prompt-library-plugin",
+      "source": {
+        "source": "local",
+        "path": "./plugins/prompt-library-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

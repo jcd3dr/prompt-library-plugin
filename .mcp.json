@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "image-prompt-library": {
+      "type": "http",
+      "url": "https://prompts.jcdcruz.com/mcp"
+    }
+  }
+}
