@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Image Prompt Library logo">
+  <rect width="512" height="512" rx="112" fill="#142239"/>
+  <rect x="88" y="104" width="336" height="304" rx="56" fill="none" stroke="#F7FAFF" stroke-width="24"/>
+  <circle cx="340" cy="186" r="30" fill="#48D9C5"/>
+  <path d="M112 338l90-98 71 71 46-49 81 76" fill="none" stroke="#F7FAFF" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M143 82h68M177 48v68" stroke="#48D9C5" stroke-width="22" stroke-linecap="round"/>
+</svg>

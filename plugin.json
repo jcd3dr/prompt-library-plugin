@@ -26,7 +26,9 @@
           "Read",
           "Write"
         ],
-        "websiteURL": "https://prompts.jcdcruz.com"
+        "websiteURL": "https://prompts.jcdcruz.com",
+        "logo": "./assets/logo.svg",
+        "composerIcon": "./assets/composer-icon.svg"
       }
     }
   }
