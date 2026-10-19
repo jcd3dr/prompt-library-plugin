@@ -1,23 +1,33 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "dev-6ad542f6fdc48191acac273651b56e97",
+  "name": "prompt-library-plugin",
   "version": "2.1.1",
-  "description": "Image Prompt Library",
+  "description": "Create, validate, document and publish reusable image prompts in Image Prompt Library using its remote MCP server.",
   "author": {
-    "name": "App developer"
+    "name": "DadeCore"
   },
+  "homepage": "https://prompts.jcdcruz.com",
+  "repository": "https://github.com/jcd3dr/prompt-library-plugin",
+  "keywords": [
+    "image-generation",
+    "prompt-engineering",
+    "image-prompt-library",
+    "mcp"
+  ],
   "extensions": {
     "com.openai": {
       "interface": {
-        "capabilities": [],
-        "category": "Other",
-        "defaultPrompt": null,
-        "developerName": "App developer",
         "displayName": "Image Prompt Library",
-        "longDescription": "Image Prompt Library",
-        "shortDescription": "Image Prompt Library"
-      },
-      "apps": "./.app.json"
+        "shortDescription": "Create and publish tested image prompts.",
+        "longDescription": "Professional workflow for native-first image generation, visual QA, educational Spanish descriptions, SEO and publication through the Image Prompt Library MCP.",
+        "developerName": "DadeCore",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://prompts.jcdcruz.com"
+      }
     }
   }
 }
