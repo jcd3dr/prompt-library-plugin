@@ -20,11 +20,11 @@
 
 ## Voice for public text
 
-Neutral Spanish, "tú", direct and practical, short paragraphs, no hype. Prompt text and fragments in English.
+Plain everyday Spanish for a general audience with no prompt knowledge, "tú", direct and practical, short paragraphs, technical terms explained the first time, no hype. Prompt text and fragments in English.
 
 ## Categories
 
-Name: what the reader wants to make (e.g. "Producto", "Retrato", "Miniaturas", "Video para redes"). Description: one or two Spanish sentences used as the category page intro. Thumbnail: a representative real result, or the automatic one.
+Name: what the reader wants to make, covering everyday and business goals (e.g. "Retratos personales", "Vender en marketplace", "Producto", "Miniaturas", "Invitaciones", "Video para redes"). The library will grow large: categories are how a general visitor finds their goal. Description: one or two Spanish sentences used as the category page intro. Thumbnail: a representative real result, or the automatic one.
 
 ## Red flags to report in audits
 

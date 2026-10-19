@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "prompt-library-plugin",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Manage Image Prompt Library as a public platform for discovering, learning, customizing, and reusing AI prompts through its connected MCP.",
   "author": {
     "name": "DadeCore"

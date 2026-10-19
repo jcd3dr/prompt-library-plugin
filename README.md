@@ -5,11 +5,11 @@ Editorial and content operations plugin for [Image Prompt Library](https://promp
 - `plugin.json`: portable Agent Plugins 1.0 manifest and public identity.
 - `mcp.json`: remote Image Prompt Library MCP at `https://prompts.jcdcruz.com/mcp` (streamable HTTP; authentication must be configured in the target runtime where required).
 - `skills/ipl-site-guide/SKILL.md`: **start here**. What the site is, who it serves, the agent's role, house rules, a task router and the full MCP tool map.
-- `skills/ipl-prompt-publication/SKILL.md`: the authoritative image-template publication workflow, with references for visual design, QA, educational Spanish metadata and MCP operation.
+- `skills/ipl-prompt-publication/SKILL.md`: the core workflow. Creates, tests and publishes one reusable prompt template (image or video, any mode), with references for prompt design, QA, educational Spanish metadata and MCP operation.
 - `skills/ipl-blog-editorial/SKILL.md`: blog ("Aprende") workflow with the editorial line, voice, article format, SEO and pre-publication checklist.
-- `skills/ipl-library-maintenance/SKILL.md`: editing existing prompts, video prompts from supplied files, categories, tags, audits, unpublish and delete.
+- `skills/ipl-library-maintenance/SKILL.md`: editing existing prompts, categories, tags, audits, unpublish and delete.
 
-When publishing a newly designed img2image template, the skill builds its own fictional input fixture when no user image was commissioned, then generates and validates the result from the locked reusable prompt. Native GPT Image takes priority. A separate source fixture is not a second gallery variant.
+When publishing a newly designed img2image or img2video template, the skill builds its own fictional input fixture when no user image was commissioned, then generates and validates the result from the locked reusable prompt. Native GPT Image takes priority. A separate source fixture is not a second gallery variant.
 
 The plugin's broader purpose is website content management: `ipl-site-guide` routes each task to the workflow skill that covers it. The separate `DadeCore Visual Prompt Publisher` ChatGPT plugin is superseded by these repository skills.
 

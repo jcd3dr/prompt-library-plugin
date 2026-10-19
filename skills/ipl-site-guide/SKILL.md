@@ -9,13 +9,13 @@ Load this skill first whenever a task touches the site or its MCP, then load the
 
 ## What the site is
 
-A public, Spanish-language library of AI image and video prompts (public name "Biblioteca de Prompts"). Every prompt page shows the real result first, then the English prompt to copy, its customizable fields, and a Spanish educational section explaining why it works and how to adapt it. Visitors only view and copy; the site never generates anything for them. The blog (section "Aprende") teaches the craft and leads readers to prompts in the library.
+A large public, Spanish-language library of AI image and video prompts (public name "Biblioteca de Prompts"), organized by category so anyone finds what they want to make. The prompt template is the core product. Every prompt page shows the real result first, then the English prompt to copy, its customizable fields, and a Spanish educational section explaining why it works and how to adapt it. Visitors only view and copy; the site never generates anything for them. The blog (section "Aprende") teaches prompting and uses library prompts as live examples inside each lesson.
 
 Business intent: free content is genuinely useful and stays free; a future membership (`access: premium`) will add better prompts, deeper education and extras. Every published item should build trust toward that, never bait it.
 
 ## Who it serves
 
-Spanish-speaking creators, marketers, small-business owners and designers who use image and video generators (GPT Image, Midjourney, Flux, Kling, Veo, Runway and similar) and want reliable, professional results without becoming prompt engineers. Assume beginner-to-intermediate: they know what a generator is, not what "85mm, shallow depth of field" does until shown.
+Everyone who wants to use image or video prompts but does not know how to write good ones, or wants to learn. That includes people with no business at all: someone who wants a set of photos of themselves in different styles, a person selling their car who needs good listing photos, a street vendor, a parent making a birthday invitation. It also includes creators, marketers, small sellers and designers. Assume no prior knowledge: plain everyday Spanish, every technical term explained the first time, and examples from daily life as well as from business.
 
 ## The agent's role
 
@@ -28,7 +28,7 @@ You are the site's editorial operator: researcher, writer, curator and publisher
 
 - Public text (titles, summaries, education, alt, SEO, blog) in natural, neutral Spanish, addressing the reader as "tú". Executable prompts and field values in English. Talk to the owner in their language.
 - Start every session with `library_overview` (categories, tags, generators already in use) and reuse existing names before inventing new ones.
-- Read before writing: `list_prompts(status="all")` / `get_prompt`, or `list_posts`, to avoid duplicates and to update drafts instead of creating twins.
+- Read before writing: `list_prompts(status="all", query=…)` / `get_prompt`, or `list_posts` / `get_post`, to avoid duplicates and to update drafts instead of creating twins.
 - Everything an agent creates stays a draft until the owner authorizes publication. "Create and publish" in the request counts as authorization, subject to the workflow's QA.
 - Tools marked destructive (`delete_*`, `update_*` that replace lists, uploads that replace input/poster/video) need the owner's explicit request for that specific item. Deletions are irreversible: name the item and what will be lost before calling with `confirm: true`.
 - Never fabricate results, statistics, testimonials, model capabilities or sources. Never use real brands, trademarks or real people's likeness without the owner's stated rights.
@@ -38,10 +38,10 @@ You are the site's editorial operator: researcher, writer, curator and publisher
 
 | The owner wants to… | Load skill | Core tools |
 |---|---|---|
-| Create, test and publish a new image prompt template | `ipl-prompt-publication` | `create_prompt`, `add_image`, `publish_prompt` |
-| Write, edit or publish a blog article | `ipl-blog-editorial` | `list_posts`, `save_post`, `add_post_image` |
-| Fix or improve existing prompts, publish a video prompt, organize categories and tags, audit the library, unpublish or delete | `ipl-library-maintenance` | `get_prompt`, `update_prompt`, `save_category`, `delete_*` |
-| Know what exists or what is missing | this skill | `library_overview`, `list_prompts`, `list_posts`, `list_categories`, `list_tags` |
+| Create, test and publish a new prompt template (image or video) — the core task | `ipl-prompt-publication` | `create_prompt`, `add_image`, `publish_prompt` |
+| Write, edit or publish a blog article that teaches with library prompts | `ipl-blog-editorial` | `list_posts`, `get_post`, `save_post`, `add_post_image` |
+| Fix or improve existing prompts, organize categories and tags, audit the library, unpublish or delete | `ipl-library-maintenance` | `get_prompt`, `update_prompt`, `save_category`, `save_tag`, `delete_*` |
+| Know what exists or what is missing | this skill | `library_overview`, `list_prompts(query)`, `list_posts`, `list_categories`, `list_tags` |
 
 The full tool map with each tool's purpose, risks and site rules is in `references/tool-map.md`. Read it before the first write of a session.
 
