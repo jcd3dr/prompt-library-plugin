@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "dev-6ad542f6fdc48191acac273651b56e97",
+  "version": "2.1.1",
+  "description": "Image Prompt Library",
+  "author": {
+    "name": "App developer"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "capabilities": [],
+        "category": "Other",
+        "defaultPrompt": null,
+        "developerName": "App developer",
+        "displayName": "Image Prompt Library",
+        "longDescription": "Image Prompt Library",
+        "shortDescription": "Image Prompt Library"
+      },
+      "apps": "./.app.json"
+    }
+  }
+}
