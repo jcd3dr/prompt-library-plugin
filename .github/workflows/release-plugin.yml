@@ -1,0 +1,68 @@
+name: Release installable plugin ZIP
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - plugin.json
+      - mcp.json
+      - server.json
+      - 'skills/**'
+      - 'assets/**'
+      - scripts/build_distribution.py
+      - scripts/validate_distribution.py
+      - .github/workflows/release-plugin.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-plugin
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build and inspect the installable archive
+        run: |
+          python3 scripts/build_distribution.py
+          python3 scripts/validate_distribution.py
+          python3 - <<'PY'
+          import hashlib
+          from pathlib import Path
+          archive = Path("dist/prompt-library-plugin.zip")
+          checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
+          Path("dist/SHA256SUMS.txt").write_text(f"{checksum}  {archive.name}\n")
+          PY
+      - name: Publish release and ZIP asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_COMMIT: ${{ github.sha }}
+        run: |
+          version="$(python3 -c 'import json; print(json.load(open("plugin.json"))["version"])')"
+          tag="v$version"
+          if gh release view "$tag" --json url > /dev/null 2>&1; then
+            echo "Release $tag already exists; keeping its published assets unchanged."
+            exit 0
+          fi
+          cat > dist/release-notes.md <<'NOTES'
+          ## Instalación en ChatGPT.com desde el teléfono o la computadora
+
+          1. Descarga **prompt-library-plugin.zip** en Assets y guárdalo sin descomprimir.
+          2. Abre ChatGPT.com, selecciona Plugin Creator y adjunta el ZIP desde Archivos o Descargas.
+          3. Solicita instalar el plugin en tu cuenta y abre el enlace que devuelva Plugin Creator.
+          4. Completa la conexión MCP solicitada y comprueba la skill y las herramientas en un chat nuevo.
+
+          El ZIP contiene un solo plugin: manifiesto portable, MCP remoto, skill con referencias e iconos. No contiene IDs de apps privadas ni catálogos de marketplace.
+
+          **No uses Source code (zip):** es la copia automática del repositorio completo.
+
+          Paquete construido y validado automáticamente. La instalación y autenticación en cada cuenta se verifican después de cargar el ZIP. SHA256SUMS.txt permite comprobar la descarga.
+          NOTES
+          gh release create "$tag" dist/prompt-library-plugin.zip dist/SHA256SUMS.txt --target "$RELEASE_COMMIT" --title "Image Prompt Library $version" --notes-file dist/release-notes.md --latest
