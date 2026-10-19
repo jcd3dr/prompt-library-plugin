@@ -42,6 +42,16 @@ Los metadatos de presentación van en `plugin.json` → `extensions.com.openai.i
 
 El catálogo Git no equivale a una instalación personal en ChatGPT web. La importación de marketplaces GitHub para equipos corresponde a administradores de espacios compatibles. No requiere publicar este plugin en el directorio público.
 
+## Compatibilidad con ChatGPT.com
+
+Desde la versión 2.1.3, `plugin.json` declara explícitamente `extensions.com.openai.requires_local_executor: false`; el adaptador Codex generado conserva el mismo valor. El paquete utiliza exclusivamente el MCP remoto HTTPS y no requiere programas locales ni hooks de escritorio. La construcción rechaza una configuración que vuelva a exigir ejecución local.
+
+La versión 2.1.2 ya usaba transporte remoto y no declaraba `requires_local_executor: true`. Por tanto, el repositorio por sí solo no permite atribuir una etiqueta «solo escritorio» de una instalación existente a ese campo. Esta versión hace explícito el requisito y añade controles de regresión; la clasificación efectiva debe comprobarse después de actualizar la instalación en ChatGPT.com.
+
+Actualizar el repositorio o descargar el ZIP no actualiza automáticamente un plugin ya guardado en tu cuenta. Para actualizarlo con Plugin Creator, proporciona el enlace exacto del plugin instalado junto al ZIP nuevo y solicita actualizar ese mismo plugin. Después verifica que admite un chat en la nube, que carga la skill y que ejecuta una lectura MCP. Una instalación procedente de un marketplace local continúa usando el mecanismo de distribución del cliente local.
+
+Referencia: [requisito oficial de ejecución local](https://developers.openai.com/plugins/deploy/desktop-only).
+
 ## Conexión y comprobación
 
 Endpoint: `https://prompts.jcdcruz.com/mcp`, HTTP transmisible. Completa la autenticación que solicite el host; nunca agregues credenciales al repositorio. Comprueba descubrimiento de herramientas y una llamada de lectura antes de publicar. Una instalación correcta no demuestra que el servidor esté accesible ni autenticado.
@@ -63,3 +73,4 @@ La construcción comprueba metadatos obligatorios, iconos incluidos y contenidos
 El formato procede de https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/server-json/generic-server-json.md. vidIQ utiliza el mismo formato en https://github.com/vid-io/vidiq-mcp/blob/main/server.json.
 
 Añadir el archivo no publica el servidor en MCP Registry. Su uso documentado es metadatos de registro, descubrimiento y gestión de paquetes. La lectura de este archivo para la ficha de Apps de ChatGPT se mantiene como hipótesis de prueba, no como una garantía documentada por OpenAI. No sustituye `mcp.json` ni los metadatos del plugin.
+

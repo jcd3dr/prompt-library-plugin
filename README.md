@@ -10,6 +10,8 @@ When publishing a newly designed img2image template, the skill builds its own fi
 
 The plugin's broader purpose is website content management; the publication skill handles the image-prompt publication workflow specifically. Other site operations should use the actual connected MCP capabilities with appropriate task scope and approval. The separate `DadeCore Visual Prompt Publisher` ChatGPT plugin is superseded by this repository skill.
 
+El paquete 2.1.3 declara explícitamente `requires_local_executor: false` y valida que su configuración no requiera ejecución local. La comprobación en una instalación real de ChatGPT.com sigue siendo necesaria; actualizar GitHub no modifica automáticamente el plugin guardado en una cuenta.
+
 ## Instalación en ChatGPT.com desde un ZIP
 
 Para una instalación personal en ChatGPT, incluida una cuenta Plus, descarga el paquete preparado del release:
@@ -34,3 +36,4 @@ Marketplace: `dadecore-prompt-library`. Plugin: `prompt-library-plugin`.
 Install the repository plugin using a compatible Agent Plugins host. Confirm the remote MCP transport and host-side authentication. The presence of `mcp.json` does not automatically authenticate a service or establish that it is reachable. Validate actual MCP tools from the host after installation.
 
 Reference: https://developers.openai.com/plugins/build/plugins
+

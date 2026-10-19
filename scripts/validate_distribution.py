@@ -29,6 +29,8 @@ with zipfile.ZipFile(archive) as bundle:
     assert manifest["$schema"] == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
     assert re.fullmatch(r"\d+\.\d+\.\d+", manifest["version"]), "Expected release SemVer"
     extension = manifest["extensions"]["com.openai"]
+    assert extension.get("requires_local_executor") is False, "Explicit cloud execution support required"
+    assert not extension.get("hooks"), "Desktop lifecycle hooks are not web compatible"
     assert not extension.get("apps"), "Private app dependency in standalone ZIP"
     interface = extension["interface"]
     assert 0 < len(interface["shortDescription"]) <= 30
@@ -53,3 +55,4 @@ with zipfile.ZipFile(archive) as bundle:
         for reference in re.findall(r"`(references/[^`]+\.md)`", text):
             assert str(PurePosixPath(member).parent / reference) in names, reference
 print(f"Validated {archive.name}: {manifest['version']}, {len(names)} files, {len(skills)} skill(s)")
+

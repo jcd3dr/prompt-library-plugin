@@ -26,7 +26,12 @@ def build():
         if server["type"] != "streamable-http":
             raise ValueError("This distribution requires a remote Streamable HTTP server")
         legacy["mcpServers"][key] = {**server, "type": "http"}
-    interface = manifest["extensions"]["com.openai"]["interface"]
+    openai = manifest["extensions"]["com.openai"]
+    if openai.get("requires_local_executor") is not False:
+        raise ValueError("Web distribution must explicitly set requires_local_executor to false")
+    if openai.get("hooks"):
+        raise ValueError("Web distribution must not require desktop lifecycle hooks")
+    interface = openai["interface"]
     if manifest["extensions"]["com.openai"].get("apps"):
         raise ValueError("Standalone distribution must not depend on registered app IDs")
     for key in ("displayName", "shortDescription", "longDescription", "logo", "composerIcon"):
@@ -37,7 +42,7 @@ def build():
         if not asset.is_relative_to(ROOT.resolve()) or not asset.is_file():
             raise ValueError("Missing or uncontained icon: " + key)
     write(ROOT / ".mcp.json", legacy)
-    write(ROOT / ".codex-plugin/plugin.json", {**base, "skills": "./skills/", "mcpServers": "./.mcp.json", "interface": manifest["extensions"]["com.openai"]["interface"]})
+    write(ROOT / ".codex-plugin/plugin.json", {**base, "requires_local_executor": openai["requires_local_executor"], "skills": "./skills/", "mcpServers": "./.mcp.json", "interface": manifest["extensions"]["com.openai"]["interface"]})
     write(ROOT / ".claude-plugin/plugin.json", base)
     payload = ROOT / "plugins" / name
     if payload.exists():
@@ -69,3 +74,4 @@ if __name__ == "__main__":
                 if path.is_file():
                     bundle.write(path, Path("prompt-library-plugin") / path.relative_to(ROOT))
     print(archive)
+
