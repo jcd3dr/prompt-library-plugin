@@ -1,6 +1,6 @@
 {
   "name": "prompt-library-plugin",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "Manage Image Prompt Library as a public platform for discovering, learning, customizing, and reusing AI prompts through its connected MCP.",
   "author": {
     "name": "DadeCore"

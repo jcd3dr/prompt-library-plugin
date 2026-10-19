@@ -34,8 +34,10 @@ jobs:
           python3 scripts/validate_distribution.py
           python3 - <<'PY'
           import hashlib
+          import json
           from pathlib import Path
-          archive = Path("dist/prompt-library-plugin.zip")
+          manifest = json.loads(Path("plugin.json").read_text())
+          archive = Path("dist") / f"{manifest['name']}-v{manifest['version']}.zip"
           checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
           Path("dist/SHA256SUMS.txt").write_text(f"{checksum}  {archive.name}\n")
           PY
@@ -47,6 +49,7 @@ jobs:
         run: |
           version="$(python3 -c 'import json; print(json.load(open("plugin.json"))["version"])')"
           tag="v$version"
+          archive="dist/prompt-library-plugin-v${version}.zip"
           if gh release view "$tag" --json url > /dev/null 2>&1; then
             echo "Release $tag already exists; keeping its published assets unchanged."
             exit 0
@@ -54,7 +57,7 @@ jobs:
           cat > dist/release-notes.md <<'NOTES'
           ## Instalación en ChatGPT.com desde el teléfono o la computadora
 
-          1. Descarga **prompt-library-plugin.zip** en Assets y guárdalo sin descomprimir.
+          1. Descarga el ZIP **prompt-library-plugin-vVERSION.zip** correspondiente a la versión del release en Assets y guárdalo sin descomprimir.
           2. Abre ChatGPT.com, selecciona Plugin Creator y adjunta el ZIP desde Archivos o Descargas.
           3. Solicita instalar el plugin en tu cuenta y abre el enlace que devuelva Plugin Creator.
           4. Completa la conexión MCP solicitada y comprueba la skill y las herramientas en un chat nuevo.
@@ -65,4 +68,6 @@ jobs:
 
           Paquete construido y validado automáticamente. La instalación y autenticación en cada cuenta se verifican después de cargar el ZIP. SHA256SUMS.txt permite comprobar la descarga.
           NOTES
-          gh release create "$tag" dist/prompt-library-plugin.zip dist/SHA256SUMS.txt --target "$RELEASE_COMMIT" --title "Image Prompt Library $version" --notes-file dist/release-notes.md --latest
+          sed -i "s/vVERSION/v${version}/g" dist/release-notes.md
+          gh release create "$tag" "$archive" dist/SHA256SUMS.txt --target "$RELEASE_COMMIT" --title "Image Prompt Library $version" --notes-file dist/release-notes.md --latest
+

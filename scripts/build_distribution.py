@@ -65,7 +65,8 @@ def build():
 
 if __name__ == "__main__":
     build()
-    archive = ROOT / "dist" / "prompt-library-plugin.zip"
+    manifest = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
+    archive = ROOT / "dist" / f"{manifest['name']}-v{manifest['version']}.zip"
     archive.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
         for entry in ("plugin.json", "mcp.json", "server.json", "skills", "assets"):

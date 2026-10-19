@@ -26,15 +26,15 @@ Abre una sesión nueva y revisa `/mcp`. Invoca `/prompt-library-plugin:ipl-promp
 
 Para instalar en tu cuenta personal de ChatGPT, incluida Plus, descarga el paquete ya construido. No necesitas terminal y puedes hacerlo desde el teléfono.
 
-1. [Descarga prompt-library-plugin.zip](https://github.com/jcd3dr/prompt-library-plugin/releases/latest/download/prompt-library-plugin.zip). También está en **Assets** de [Releases](https://github.com/jcd3dr/prompt-library-plugin/releases).
+1. [Descarga prompt-library-plugin-v<VERSION>.zip](https://github.com/jcd3dr/prompt-library-plugin/releases/latest). También está en **Assets** de [Releases](https://github.com/jcd3dr/prompt-library-plugin/releases).
 2. Guarda el archivo ZIP en Archivos o Descargas. Si el teléfono lo descomprime automáticamente, conserva o vuelve a descargar el ZIP original.
 3. Abre ChatGPT.com, selecciona Plugin Creator y adjunta el ZIP desde el selector de archivos.
 4. Solicita la instalación del plugin adjunto en tu cuenta; abre el enlace que devuelve Plugin Creator y completa la instalación y cualquier conexión o autenticación solicitada.
 5. Abre un chat nuevo, selecciona Image Prompt Library y verifica la skill `ipl-prompt-publication` y las herramientas MCP con una operación de lectura.
 
-Descarga el asset **`prompt-library-plugin.zip`**, no **Source code (zip)** ni **Code → Download ZIP**: esos archivos automáticos contienen el repositorio completo.
+Descarga el asset **`prompt-library-plugin-v<VERSION>.zip`**, no **Source code (zip)** ni **Code → Download ZIP**: esos archivos automáticos contienen el repositorio completo.
 
-Para construirlo como desarrollador, ejecuta `python scripts/build_distribution.py` y después `python scripts/validate_distribution.py`. El resultado es `dist/prompt-library-plugin.zip`, con `plugin.json`, `mcp.json`, `server.json`, las skills y los iconos. El workflow de release construye y valida este mismo archivo antes de publicarlo. La instalación en la cuenta y la disponibilidad de sus funciones se comprueban en ChatGPT después de subir el ZIP.
+Para construirlo como desarrollador, ejecuta `python scripts/build_distribution.py` y después `python scripts/validate_distribution.py`. El resultado es `dist/prompt-library-plugin-v<VERSION>.zip`, con `plugin.json`, `mcp.json`, `server.json`, las skills y los iconos. El workflow de release construye y valida este mismo archivo antes de publicarlo. La instalación en la cuenta y la disponibilidad de sus funciones se comprueban en ChatGPT después de subir el ZIP.
 
 El paquete declara su propio endpoint remoto. No contiene `.app.json`, IDs de conectores registrados ni depende de «Image Prompt Library MCP» creado previamente en una cuenta. 
 

@@ -5,8 +5,8 @@ import zipfile
 from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
-archive = ROOT / "dist" / "prompt-library-plugin.zip"
 source_manifest = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
+archive = ROOT / "dist" / f"{source_manifest['name']}-v{source_manifest['version']}.zip"
 prefix = source_manifest["name"] + "/"
 
 with zipfile.ZipFile(archive) as bundle:
