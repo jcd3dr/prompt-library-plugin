@@ -10,7 +10,7 @@ codex plugin add prompt-library-plugin@dadecore-prompt-library
 codex plugin list --json
 ```
 
-Inicia una sesión nueva. Comprueba las skills (`ipl-site-guide`, `ipl-prompt-publication`, `ipl-blog-editorial`, `ipl-library-maintenance`) y la conexión `image-prompt-library` antes de publicar.
+Inicia una sesión nueva. Comprueba las diez skills (empieza por `ipl-site-guide`) y la conexión `image-prompt-library` antes de publicar.
 
 ## Claude Code
 
@@ -20,7 +20,7 @@ claude plugin install prompt-library-plugin@dadecore-prompt-library
 claude plugin list
 ```
 
-Abre una sesión nueva y revisa `/mcp`. Empieza con `/prompt-library-plugin:ipl-site-guide`; te dirige a la skill de cada tarea (prompts, blog o mantenimiento). La generación depende de las herramientas reales del entorno: instalar el plugin no añade GPT Image a Claude Code. La skill requiere autorización explícita antes de cambiar de generador.
+Abre una sesión nueva y revisa `/mcp`. Empieza con `/prompt-library-plugin:ipl-site-guide`; te dirige a la skill de cada tarea. La generación de imágenes y video depende de las herramientas nativas del entorno: instalar el plugin no añade ninguna. Si no hay una, el agente lo avisa, lista las alternativas y pide permiso antes de usarlas; si no puede generar, deja el prompt en borrador.
 
 ## ChatGPT web y móvil
 

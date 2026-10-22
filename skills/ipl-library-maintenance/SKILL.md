@@ -1,39 +1,84 @@
 ---
 name: ipl-library-maintenance
-description: Maintain and curate Image Prompt Library through the connected MCP - improve existing prompts, organize categories and tags, audit quality and SEO, and handle unpublish or delete requests safely.
+description: Organize and audit Image Prompt Library through the connected MCP - categories (including multiple categories per prompt and the «Sin categoría» fallback), tags, quality audits, old drafts, unused files, and safe unpublish or delete of prompts and articles.
 ---
 
-# Image Prompt Library — Library maintenance and curation
+# Image Prompt Library — Organization, audit and safe removal
 
-Use this skill to keep the existing library healthy as it grows. If `ipl-site-guide` is available, its house rules apply. Read `references/standards.md` before editing content: it defines what a good prompt record, category and tag look like.
+With a large library, organization is what lets any visitor find what they want to make. Read `references/standards.md` before changing content: it defines what a good prompt record, category and tag look like.
 
-## Improve an existing prompt
+## Categories (O1)
 
-1. Find it with `list_prompts(query=…)`, then `get_prompt` and note `status`, `missing_to_publish`, media roles and IDs, and `embedded_in`.
-2. Change only what was asked or what the standards require. Metadata, education, SEO, fields and tags can be fixed without regenerating images.
-3. Never edit the `prompt` text of a prompt with gallery images unless the images are regenerated from the new text: the gallery must remain the real output of the published prompt. If the owner wants a different prompt, propose a new template instead.
-4. `update_prompt` sends the full `fields` and `tags` lists when changing them. A save that breaks a server rule moves a published prompt back to draft: check `status` in the response and report it.
-5. Re-read with `get_prompt` and report what changed.
+- Name categories after what the reader wants to make ("Retratos personales", "Vender en marketplace", "Invitaciones"), not after techniques.
+- Check `list_categories` before creating one, and match spelling exactly. `create_prompt` and `update_prompt` create unknown names silently.
+- Use `save_category` with:
+  - A Spanish `name`.
+  - A short `description`, shown as the page intro.
+  - An optional thumbnail.
+- A category page appears only when it has at least one published prompt.
+- «Sin categoría» is the fallback. It has no public page, cannot be deleted, and is removed from a prompt automatically when that prompt gets another category.
 
-## Categories
+## Reorganize (O2)
 
-- Prefer a few broad, reader-facing categories (what the reader wants to make), not one per prompt. Check `list_categories` before creating; `create_prompt`/`update_prompt` silently create a category from an unknown name, so match spelling exactly.
-- `save_category` with a Spanish `name`, short `description` (shown as the category page intro) and optional thumbnail. A category page only appears when it has at least one published prompt.
-- `delete_category` unpublishes every prompt in it. Before calling, list the affected prompts, propose where they should move, and get explicit confirmation.
+A prompt can belong to several categories; the first one is its primary category.
 
-## Tags
+To restructure:
+1. Propose the new structure as a table (category → prompts).
+2. Apply only what the owner approves, with `update_prompt(categories=[…])`. Send the complete list each time.
 
-Use lowercase Spanish tags, 3–6 per prompt, reuse before creating. `save_tag` renames a tag (`tag` = id, slug or name); renaming to an existing name merges both. `delete_tag` removes a tag from every prompt (explicit request, `confirm: true`). These affect prompts only: article tags change with `save_post`.
+Deleting a category:
+1. Call `delete_category(category, confirm: false)` first. It returns which prompts would move to «Sin categoría» because it is their only category.
+2. Show the owner that list and where you suggest moving each prompt.
+3. Reassign the prompts if the owner agrees.
+4. Call `delete_category(category, confirm: true)`.
 
-## Audit the library
+Prompts never get unpublished by deleting a category.
 
-On request, read everything with `list_prompts(status="all")`, `get_prompt` per item, `list_posts` and `get_post` where needed, then report in a table: drafts and what blocks each one (`missing_to_publish`), published prompts that miss the standards (education too thin, missing SEO fields, field values without examples, weak alt text, generic titles), near-duplicate prompts, categories with few or no published prompts, and orphan or near-duplicate tags. Propose fixes; apply only the ones the owner approves.
+## Tags (O3)
 
-## Unpublish and delete
+- Tags are lowercase Spanish, 3–6 per prompt. Reuse an existing tag before creating one.
+- `save_tag` renames a tag. Renaming to an existing name merges the two tags ("retrato" + "retratos").
+- `delete_tag(confirm: true)` removes a tag from every prompt. Use it only on an explicit request.
+- Article tags change with `save_post`.
 
-- Unpublish: `publish_prompt(publish: false)` when asked. Check `embedded_in` from `get_prompt` first: published articles that embed the prompt stop showing that card; tell the owner which ones.
-- Delete (`delete_prompt`, `delete_image`, `delete_category`, `delete_tag`, `delete_post`, `remove_post_cover`): irreversible. Only on an explicit request for that item. State what will be lost (files, embeds, unpublished prompts) and call with `confirm: true` only after the owner confirms.
+## Audit the library (O4)
+
+On request:
+1. Read everything: `list_prompts(status="all")`, `get_prompt` per item, and `list_posts` / `get_post` where needed.
+2. Report in a table:
+   - Drafts and what blocks each one (`missing_to_publish`).
+   - Scheduled items and their dates.
+   - Prompts below the standards.
+   - Near-duplicate prompts.
+   - Prompts left only in «Sin categoría».
+   - Categories with few or no published prompts.
+   - Duplicate tags.
+   - Images with a missing or unclear generator, or weak alt text.
+3. Propose fixes and apply only the ones the owner approves.
+
+## Old drafts (O5)
+
+1. List drafts with `list_prompts(status="draft")` and `list_posts(status="draft")`.
+2. For each draft, say what it needs to be finished.
+3. Decide with the owner which ones to finish and which to delete.
+4. Delete only the drafts the owner names.
+
+## Unused files
+
+Removed inline blog images and replaced files can leave stored files that nothing uses.
+
+1. Call `clean_orphan_files(confirm: false)` to list them. It only includes files older than 24 hours.
+2. Show the owner the count and size.
+3. Call `clean_orphan_files(confirm: true)` only after the owner approves. Deleting is irreversible.
+
+## Unpublish and delete (P9, B9)
+
+- **Unpublish a prompt** with `publish_prompt(publish: false)`. Check `embedded_in` from `get_prompt` first: published articles that embed the prompt stop showing that card. Tell the owner which articles are affected.
+- **Delete anything** (`delete_prompt`, `delete_image`, `delete_category`, `delete_tag`, `delete_post`, `remove_post_cover`, `delete_idea`) only on an explicit request for that specific item. Deleting is irreversible.
+  1. State what will be lost: files, embeds, links.
+  2. Call with `confirm: true` only after the owner confirms.
 
 ## Boundaries
 
-Do not regenerate images or change a published prompt's canonical text in this workflow. Do not bulk-edit or bulk-delete without a list the owner approved.
+- Do not regenerate media or change a prompt's text in this workflow.
+- Do not bulk-edit or bulk-delete without a list the owner approved.

@@ -1,27 +1,49 @@
 ---
 name: ipl-blog-editorial
-description: Plan, write, edit and publish articles for the Image Prompt Library blog ("Aprende") through the connected MCP, following the site's editorial line, format and SEO standards.
+description: Write and publish a new Image Prompt Library blog article ("Aprende") through the connected MCP with a full editorial process - outline, draft, separate editing pass, optional supporting prompts, images, SEO, draft, review and publication or scheduling.
 ---
 
-# Image Prompt Library — Blog editorial workflow
+# Image Prompt Library — Write a blog article
 
-The blog teaches prompts and prompting to a general audience. Each article is a lesson, and the library's prompts embedded inside it are the live examples that show the lesson working. Read `references/editorial-line.md` (what to publish and how it should sound) and `references/article-format.md` (structure, Markdown cards, SEO) before writing. If `ipl-site-guide` is available, its house rules also apply.
+The article is the product of this workflow. Every article is about prompts, prompting techniques or something closely related. Writing it is an editorial process with distinct steps, not "write a text and save it."
 
-## Article transaction
+Read `references/editorial-line.md` (what to publish and how it should sound) and `references/article-format.md` (structure, Markdown, SEO, checklist) before writing.
 
-1. **Brief.** Infer from the request: one reader problem, one search intent, the pillar it belongs to, and the library prompts that solve it. If the topic falls outside the editorial line, say so and propose the closest in-scope angle.
-2. **Preflight.** `library_overview`, then `list_posts(query=<topic>)` to avoid duplicating an existing article (read it with `get_post` and update it instead) and `list_prompts(status="published", query=<topic>)` to choose the prompts that demonstrate each point. An embedded prompt must already be published; if the ideal one does not exist, either embed the closest published one or flag the gap to the owner (creating it is the `ipl-prompt-publication` workflow).
-3. **Research when facts are involved.** Model features, versions, prices, limits or dates must come from a primary source checked in this session, cited in the text and dated ("a octubre de 2026"). If you cannot verify a claim, remove it.
-4. **Outline, then draft.** Title that promises a concrete result, an opening that answers the question in the first paragraph, `##` sections, at least one `{{prompt:slug}}` embed placed where the reader needs it, and a closing next step. Write in Spanish following the voice rules.
-5. **Images.** Use real outputs (preferably from the embedded prompts) or images the owner provided. Upload with `add_post_image`: `role: cover` for the cover, `role: inline` returns Markdown to paste into the body. Every image gets a descriptive `alt`; captions credit the generator ("Generada con …"). Never use stock or search-result images without the owner's stated rights.
-6. **Save as draft.** `save_post` with title, slug, description, body, tags, meta_title, meta_description, cover_alt, and `status: draft` unless publication was authorized. Re-read with `get_post` and check body rendering markers (embeds, image Markdown) survived.
-7. **Self-review.** Run the checklist in `references/article-format.md`. Fix before publishing.
-8. **Publish only when authorized.** `save_post` with `post` and `status: published`. If the server rejects embeds, publish the missing prompts first or replace the embed. Re-read and report: post id, public link (`/blog/<slug>`), status, embedded prompts, images uploaded, and what was not verified (rendering, indexing).
+## Editorial process
 
-## Editing an existing article
+1. **Topic and angle.** Start from the owner's topic or an approved idea (`list_ideas`). Define one reader problem, one search intent and the promise of the article. Check `list_posts(query=…)`: if an article already covers it, propose updating that one instead.
+2. **Research.** Every fact about tools must come from a source checked in this session, with its date. If you have a research brief, use it. Otherwise gather the sources first. What you cannot verify stays out.
+3. **Outline (B3).** Write the title, the promise, the sections in order with the key point of each, the examples, and the images needed. Every section must earn its place.
+4. **Draft (B4).** Write a complete draft in plain Spanish following the voice rules. Answer the question in the opening paragraph. Put prompt fragments in English inside code formatting.
+5. **Editing pass (B4).** Do a separate pass that re-reads the draft as an editor:
+   - Accuracy against the sources.
+   - Clarity for someone with no knowledge.
+   - Structure.
+   - Repetition.
+   - Spelling and accents.
 
-Find it with `list_posts`, read it with `get_post`, change only what was asked, keep the slug of a published article (changing it breaks links), and preserve `published_at` unless the owner wants a new date. Report a short summary of what changed.
+   Cut what does not help the reader.
+6. **Supporting prompts (B5, optional).** Do this only when the article explains a technique that a published prompt already demonstrates. Insert `{{prompt:slug}}` on its own line right after that explanation, with one sentence on what to look at. There is no minimum and no gap to report: an article with no embeds is complete.
+7. **Images and SEO (B6).**
+   - Upload the cover and inline images with `add_post_image`. Inline images return Markdown to paste into the body.
+   - Images are real outputs or come from the owner. Each has a descriptive `alt` and a caption naming the tool that generated it.
+   - Write the description, `meta_title`, `meta_description`, tags and `cover_alt`.
+8. **Save as draft and review (B7).** Call `save_post` with `status: draft`. Then re-read it with `get_post` and run the checklist in `references/article-format.md`.
+9. **Publish or schedule (B7).** Only when authorized:
+   - Publish with `save_post(post, status: "published")`.
+   - Or, if the owner gave a date, schedule with `status: "scheduled"` and a future `published_at`.
+
+   If the server rejects an embed, publish that prompt first or remove the embed. Then report:
+   - Post id and link (`/blog/<slug>`).
+   - Status, and the date if scheduled.
+   - Embeds used.
+   - Images uploaded.
+   - What was not verified.
+
+   If the article came from an idea, `save_idea(idea, status: "done", post: <slug>)`.
 
 ## Boundaries
 
-Do not create, publish or delete library prompts while writing an article: report the missing example instead. Do not delete posts or remove covers (`remove_post_cover`) without an explicit request for that item. Do not publish sponsored, affiliate or promotional content without a visible disclosure and the owner's request.
+- Do not create, publish or delete library prompts while writing an article.
+- Do not publish sponsored, affiliate or promotional content without a visible disclosure and the owner's request.
+- Do not delete posts or covers in this workflow.
